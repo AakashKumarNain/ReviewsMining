@@ -14,4 +14,12 @@ new_url = "http://www.amazon.in/product-reviews/" + pid + "/ref=acr_search_see_a
 r = requests.get(new_url)
 soup = BeautifulSoup(r.content,"html.parser")
 
-print(soup.prettify())
+reviews_list = soup.find_all("div",{"class":"a-section a-spacing-none reviews celwidget"})[0]
+
+for review in reviews_list:
+    try:
+        next_review = review.find_all("span",{"class":"a-size-base review-text"})[0].text
+        print(next_review,end="[END]")
+        print("\n")
+    except:
+        pass
